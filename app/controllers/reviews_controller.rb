@@ -5,12 +5,12 @@ class ReviewsController < ApplicationController
     @review = Review.new
   end
   def create
-    @movie = Movie.find(params[:group_id])
+    @movie = Movie.find(params[:movie_id])
     @review = Review.new(review_params)
     @review.movie = @movie
     @review.user = current_user
     if @review.save
-      redirect_to group_path(@movie)
+      redirect_to movie_path(@movie)
     else
       render :new
     end

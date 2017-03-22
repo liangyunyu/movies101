@@ -1,29 +1,11 @@
-<div class="col-md-12">
-  <h2 class="text-center"> My review </h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th> Content </th>
-        <th> Movie Name </th>
-        <th> Create At </th>
-        <th> Update At </th>
-        <th colspan='2'> Method </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @reviews.each do |review| %>
-        <tr>
-          <td><%= review.content %></td>
-          <td><%= review.movie.title %></td>
-          <td><%= review.created_at %></td>
-          <td><%= review.updated_at %></td>
-          <td><%= link_to('Edit', edit_movie_review_path(review.movie, review),
-          class: "btn btn-default btn-xs") %></td>
-          <td><%= link_to('Delete', movie_review_path(review.movie,review),
-          method: :delete, data: {confirm: "Are you sure?"},
-          class: "btn btn-default btn-xs") %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<h2 class="text-center">New review</h2>
+<div class="col-md-4 col-md-offset-4">
+  <%= simple_form_for [@movie,@review] do |f| %>
+    <div class="form-movie">
+      <%= f.input :content, input_html: {class:"form-control"} %>
+    </div>
+    <div class="form-actions">
+      <%= f.submit "Submit", disable_with: "Submitng...", class: "btn btn-primary" %>
+    </div>
+  <% end %>
 </div>
