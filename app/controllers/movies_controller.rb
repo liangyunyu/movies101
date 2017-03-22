@@ -1,4 +1,8 @@
 class MoviesController < ApplicationController
+
+  before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy]
+  before_action :find_movie_and_check_permission, only: [:edit, :update, :destroy]
+
   def index
     @movies = Movie.all
   end
@@ -40,6 +44,13 @@ class MoviesController < ApplicationController
   end
 
   private
+
+  def find_movie_and_check_permission
+    @movie = Movie.find(params[:id])
+    if current_user != @movie.user
+      redirect_to root_path, alert: "You have no permission!"
+    end
+  end
 
   def movie_params
     params.require(:movie).permit(:name, :description)
