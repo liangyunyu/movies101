@@ -6,9 +6,11 @@
     <thead>
       <tr>
         <td> # </td>
-        <td> Movie Name </td>
-        <td> Description </td>
-        <td> Creator </td>
+        <td> 影片名称 </td>
+        <td> 影片描述 </td>
+        <td> 创建者 </td>
+        <td> 创建时间 </td>
+        <td> 更新时间 </td>
         <td colspan="2"> Method </td>
       </tr>
     </thead>
@@ -18,7 +20,9 @@
           <td>#</td>
           <td><%= link_to(movie.name, movie_path(movie)) %></td>
           <td><%= movie.description %></td>
+          <td><%= movie.user.email %></td>
           <td><%= movie.created_at %></td>
+          <td><%= movie.updated_at %></td>
           <td>
               <%= link_to("Edit", edit_movie_path(movie), class: "btn btn-sm btn-default")%>
               <%= link_to("Delete", movie_path(movie), class: "btn btn-sm btn-default",
