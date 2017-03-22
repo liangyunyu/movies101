@@ -13,6 +13,7 @@ class MoviesController < ApplicationController
 
   def show
     @movie = Movie.find(params[:id])
+    # @reviews = @movie.reviews.recent.paginate(:page => params[:page], :per_page => 5)
   end
 
   def edit
@@ -22,6 +23,7 @@ class MoviesController < ApplicationController
     @movie = Movie.new(movie_params)
     @movie.user = current_user
     if @movie.save
+      current_user.join!(@movie)
       redirect_to movies_path
     else
       render :new
@@ -39,6 +41,28 @@ class MoviesController < ApplicationController
   def destroy
     @movie.destroy
     redirect_to movies_path, alert: "Movie Deleted!"
+  end
+
+  def join
+    @movie = Movie.find(params[:id])
+    if !current_user.is_member_of?(@movie)
+      current_user.join!(@movie)
+      flash[:notice] = "收藏成功"
+    else
+      flash[:warning] = "你已经收藏过"
+    end
+    redirect_to group_path(@movie)
+  end
+
+  def quit
+    @movie = Movie.find(params[:id])
+    if current_user.is_member_of?(@movie)
+      current_user.quit!(@movie)
+      flash[:alert] = "你已经取消收藏"
+    else
+      flash[:warning] = "你没有收藏过"
+    end
+    redirect_to group_path(@movie)
   end
 
   private

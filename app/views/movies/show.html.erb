@@ -1,10 +1,43 @@
 <div class="col-md-12">
-  <div class="group">
-    <%= link_to("Write a Review", new_movie_review_path(@movie), class: "btn btn-default pull-right") %>
+  <div class="movie">
+    <span class="pull-right">
+      <% if current_user && current_user.is_member_of?(@movie) %>
+        <label class = "label label-success"> Is Member </label>
+        <%= link_to("取消收藏", quit_movie_path(@movie), method: :review, class: "btn btn-default") %>
+      <% else %>
+        <label class = "label label-warning"> Isn't Member </label>
+        <%= link_to("收藏影片", join_movie_path(@movie), method: :review, class: "btn btn-default") %>
+      <% end %>
+    </span>
+    <%= link_to("写评论", new_movie_review_path(@movie), class: "btn btn-default pull-right") %>
     <% if current_user && current_user == @movie.user %>
       <%= link_to("Edit", edit_movie_path(@movie), class: "btn btn-primary pull-right") %>
     <% end %>
   </div>
-  <h2><%= @movie.name %></h2>
+  <h2><%= @movie.title %></h2>
   <p><%= @movie.description %></p>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>review Content</th>
+        <th>review Creator</th>
+        <th>review Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reviews.each do |review| %>
+        <tr>
+          <td><%= review.content %></td>
+          <td><%= review.user.email %></td>
+          <td><%= review.created_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="text-center">
+    <%= will_paginate @reviews %>
+  </div>
+
 </div>
