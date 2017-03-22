@@ -6,7 +6,7 @@ class ReviewsController < ApplicationController
   end
   def create
     @movie = Movie.find(params[:group_id])
-    @review = review.new(review_params)
+    @review = Review.new(review_params)
     @review.movie = @movie
     @review.user = current_user
     if @review.save
