@@ -51,7 +51,7 @@ class MoviesController < ApplicationController
     else
       flash[:warning] = "你已经收藏过了！"
     end
-    redirect_to group_path(@movie)
+    redirect_to movie_path(@movie)
   end
 
   def quit
@@ -62,7 +62,7 @@ class MoviesController < ApplicationController
     else
       flash[:warning] = "你没有收藏，怎么取消！"
     end
-    redirect_to group_path(@movie)
+    redirect_to movie_path(@movie)
   end
 
   private
