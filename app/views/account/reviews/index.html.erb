@@ -3,8 +3,8 @@
   <table class="table">
     <thead>
       <tr>
-        <th> 评论内容 </th>
         <th> 电影名称 </th>
+        <th> 评论内容 </th>
         <th> 创建时间 </th>
         <th> 更新时间 </th>
         <th colspan='2'> Method </th>
@@ -13,13 +13,13 @@
     <tbody>
       <% @reviews.each do |review| %>
         <tr>
+          <td><%= review.movie.name %></td>
           <td><%= review.content %></td>
-          <td><%= review.movie.title %></td>
           <td><%= review.created_at %></td>
           <td><%= review.updated_at %></td>
           <td><%= link_to('Edit', edit_movie_review_path(review.movie, review),
           class: "btn btn-default btn-xs") %></td>
-          <td><%= link_to('Delete', movie_review_path(review.movie,review),
+          <td><%= link_to('Delete', movie_review_path(review.movie, review),
           method: :delete, data: {confirm: "Are you sure?"},
           class: "btn btn-default btn-xs") %></td>
         </tr>
